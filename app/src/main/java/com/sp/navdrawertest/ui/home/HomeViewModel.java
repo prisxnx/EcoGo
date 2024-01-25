@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+
 public class HomeViewModel extends ViewModel {
+    private MutableLiveData<ArrayList<String>> dataSource = new MutableLiveData<>();
 
-    private final MutableLiveData<String> mText;
-
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is the home fragment");
+    public void setDataSource(ArrayList<String> data) {
+        dataSource.setValue(data);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<ArrayList<String>> getDataSource() {
+        return dataSource;
     }
 }

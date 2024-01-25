@@ -1,9 +1,12 @@
 package com.sp.navdrawertest;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +24,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sp.navdrawertest.databinding.ActivityMainBinding;
 import com.sp.navdrawertest.ui.CarbonFootprintFragment;
@@ -28,6 +32,8 @@ import com.sp.navdrawertest.ui.CommunityFragment;
 import com.sp.navdrawertest.ui.ProfileFragment;
 import com.sp.navdrawertest.ui.QRFragment;
 import com.sp.navdrawertest.ui.home.HomeFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -136,5 +142,36 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder>{
+        ArrayList<String> data;
+        public RvAdapter(ArrayList<String> data){
+            this.data=data;
+        }
+        @NonNull
+        @Override
+        public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.rv_item,null,false);
+            return new MyHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+            holder.rvTitle.setText(data.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size();
+        }
+
+        class MyHolder extends RecyclerView.ViewHolder{
+            TextView rvTitle;
+            public MyHolder(@NonNull View itemView) {
+                super(itemView);
+                rvTitle = itemView.findViewById(R.id.rvTitle);
+            }
+        }
     }
 }
