@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.sp.navdrawertest.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.sp.navdrawertest.ui.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_contactus"
+        android:name="com.sp.navdrawertest.ui.contactus.ContactUsFragment"
+        android:label="Contact Us"
+        tools:layout="@layout/fragment_contactus" />
+
+    <fragment
+        android:id="@+id/nav_carbon_footprint"
+        android:name="com.sp.navdrawertest.ui.CarbonFootprintFragment"
+        android:label="Carbon Footprint"
+        tools:layout="@layout/fragment_carbon_footprint" />
+
+    <fragment
+        android:id="@+id/nav_qr"
+        android:name="com.sp.navdrawertest.ui.QRFragment"
+        android:label="QR"
+        tools:layout="@layout/fragment_qr" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.sp.navdrawertest.ui.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_community"
+        android:name="com.sp.navdrawertest.ui.CommunityFragment"
+        android:label="Community"
+        tools:layout="@layout/fragment_community" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.sp.navdrawertest.ui.home.HomeFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_home" />
+
+
+</navigation>

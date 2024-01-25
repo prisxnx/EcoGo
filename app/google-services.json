@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "902168232658",
+    "project_id": "navdrawertest-f5f34",
+    "storage_bucket": "navdrawertest-f5f34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902168232658:android:f98a9a30146d076474e30b",
+        "android_client_info": {
+          "package_name": "com.sp.navdrawertest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7uCBJ_szHu6oYlswc1A4OcfC69Ak4m3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

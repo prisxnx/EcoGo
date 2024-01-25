@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/exploreicon"
+            android:iconTint="@color/midgreen"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/infoicon"
+            android:iconTint="@color/midgreen"
+            android:title="About EcoGo" />
+        <item
+            android:id="@+id/nav_contactus"
+            android:icon="@drawable/contacticon"
+            android:title="Contact Us" />
+
+    </group>
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/draw_logout"
+                android:icon="@drawable/exitapp"
+                android:title="Log Out"/>
+            <item
+                android:id="@+id/draw_deleteacc"
+                android:icon="@drawable/deleteicon"
+                android:title="Delete Account"/>
+            <item
+                android:id="@+id/draw_exitapp"
+                android:icon="@drawable/byeicon"
+                android:title="Exit App"/>
+        </menu>
+    </item>
+
+</menu>
