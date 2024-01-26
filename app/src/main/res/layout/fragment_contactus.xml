@@ -6,17 +6,104 @@
     android:layout_height="match_parent"
     tools:context=".ui.contactus.ContactUsFragment">
 
-    <TextView
-        android:id="@+id/text_contactus"
+    <RelativeLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/qns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Any Questions?"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/darkgrey"/>
+
+        <TextView
+            android:layout_below="@+id/qns"
+            android:id="@+id/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Us!"
+            android:textStyle="bold"
+            android:paddingLeft="5dp"
+            android:textSize="50dp"
+            android:textColor="@color/darkgrey"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/ContactCard"
+            android:layout_below="@id/contact"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="375dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="12dp"
+            app:cardUseCompatPadding="true"
+            android:backgroundTint="@color/lightgreen">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Call Us"
+                android:textStyle="bold"
+                android:textSize="50dp"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_marginTop="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="1234-5678"
+                android:textSize="40dp"
+                android:textColor="@color/white"/>
+            <Button
+                android:layout_marginTop="120dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/midgreen"
+                android:text="Call Now"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                android:layout_gravity="center_horizontal"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_below="@id/ContactCard"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="375dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="12dp"
+            app:cardUseCompatPadding="true"
+            android:backgroundTint="@color/lightgreen">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Email Us"
+                android:textStyle="bold"
+                android:textSize="50dp"
+                android:textColor="@color/white"/>
+            <TextView
+                android:layout_marginTop="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="help@ecogo.com"
+                android:textSize="40dp"
+                android:textColor="@color/white"/>
+            <Button
+                android:layout_marginTop="120dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/midgreen"
+                android:text="Mail Now"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                android:layout_gravity="center_horizontal"/>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

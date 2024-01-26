@@ -23,9 +23,6 @@ public class ContactUsFragment extends Fragment {
 
         binding = FragmentContactusBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textContactus;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
