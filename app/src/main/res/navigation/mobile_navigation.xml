@@ -24,34 +24,32 @@
         tools:layout="@layout/fragment_contactus" />
 
     <fragment
-        android:id="@+id/nav_carbon_footprint"
+        android:id="@+id/bottom_CF"
         android:name="com.sp.navdrawertest.ui.CarbonFootprintFragment"
         android:label="Carbon Footprint"
         tools:layout="@layout/fragment_carbon_footprint" />
 
     <fragment
-        android:id="@+id/nav_qr"
+        android:id="@+id/bottom_qr"
         android:name="com.sp.navdrawertest.ui.QRFragment"
         android:label="QR"
         tools:layout="@layout/fragment_qr" />
 
     <fragment
-        android:id="@+id/nav_profile"
+        android:id="@+id/bottom_profile"
         android:name="com.sp.navdrawertest.ui.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_community"
+        android:id="@+id/bottom_com"
         android:name="com.sp.navdrawertest.ui.CommunityFragment"
         android:label="Community"
         tools:layout="@layout/fragment_community" />
 
     <fragment
-        android:id="@+id/nav_search"
+        android:id="@+id/bottom_search"
         android:name="com.sp.navdrawertest.ui.home.HomeFragment"
         android:label="Search"
         tools:layout="@layout/fragment_home" />
-
-
 </navigation>

@@ -18,8 +18,8 @@
             android:id="@+id/nav_contactus"
             android:icon="@drawable/contacticon"
             android:title="Contact Us" />
-
     </group>
+
     <item
         android:title="">
         <menu>

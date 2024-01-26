@@ -1,6 +1,7 @@
 package com.sp.navdrawertest;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -65,59 +67,55 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_about, R.id.nav_contactus, R.id.draw_logout, R.id.draw_deleteacc,R.id.draw_exitapp)
+                R.id.nav_home, R.id.nav_about, R.id.nav_contactus, R.id.draw_logout, R.id.draw_deleteacc,R.id.draw_exitapp,R.id.bottom_CF,R.id.bottom_qr,R.id.bottom_com,R.id.bottom_profile,R.id.bottom_search)
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item){
+                NavController navController = Navigation.findNavController(MainActivity.this,R.id.nav_host_fragment_content_main);
                 int id = item.getItemId();
 
-                if(id==R.id.draw_logout){
-                    Toast.makeText(MainActivity.this, "logout", Toast.LENGTH_SHORT).show();
-                    drawer.closeDrawer(GravityCompat.START);
-                    return true;
+                if (id == R.id.bottom_search || id == R.id.bottom_profile || id == R.id.bottom_CF || id == R.id.bottom_qr || id == R.id.bottom_com) {
+                    navController.navigate(id);
                 }
+                    return true;
+            }
+        });
 
-                else if(id==R.id.draw_deleteacc){
-                    Toast.makeText(MainActivity.this, "delete acc", Toast.LENGTH_SHORT).show();
-                    drawer.closeDrawer(GravityCompat.START);
-                    return true;
-                }
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
+                int id = item.getItemId();
 
-                else if(id==R.id.draw_exitapp){
-                    Toast.makeText(MainActivity.this, "exit app", Toast.LENGTH_SHORT).show();
-                    drawer.closeDrawer(GravityCompat.START);
+                if (id == R.id.bottom_search || id == R.id.bottom_profile || id == R.id.bottom_CF || id == R.id.bottom_qr || id == R.id.bottom_com) {
+                    navController.navigate(id);
                     return true;
-
-                }else if (id == R.id.bottom_CF) {
-                    navController.navigate(R.id.nav_carbon_footprint);
-                    return true;
-                } else if (id== R.id.bottom_qr) {
-                    navController.navigate(R.id.nav_qr);
-                    return true;
-                } else if (id == R.id.bottom_profile) {
-                    navController.navigate(R.id.nav_profile);
-                    return true;
-                } else if (id == R.id.bottom_com) {
-                    navController.navigate(R.id.nav_community);
-                    return true;
-                } else if (id == R.id.bottom_search) {
-                    navController.navigate(R.id.nav_home);
-                    Toast.makeText(getApplicationContext(), "You are at Search page", Toast.LENGTH_SHORT).show();
-
                 } else {
-                    NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
                     drawer.closeDrawer(GravityCompat.START);
+                    if (id == R.id.draw_deleteacc) {
+                        Toast.makeText(MainActivity.this, "delete account", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.draw_exitapp) {
+                        Toast.makeText(MainActivity.this, "exit app", Toast.LENGTH_SHORT).show();
+                    } else if (id == R.id.draw_logout) {
+                        finish();
+                    } else if(id==R.id.nav_home){
+                        navController.navigate(id);
+                    } else if(id==R.id.nav_about){
+                        navController.navigate(id);
+                    }
+                    else if(id==R.id.nav_contactus){
+                        navController.navigate(id);
+                    }
                     return NavigationUI.onNavDestinationSelected(item, navController);
                 }
-                return false;
             }
-
         });
     }
 
