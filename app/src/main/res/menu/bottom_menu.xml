@@ -6,7 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_search_24"
-        android:title="Search" />
+        android:title="Explore" />
     <item
         android:id="@+id/bottom_com"
         android:layout_width="70dp"

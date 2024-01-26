@@ -8,7 +8,7 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/exploreicon"
             android:iconTint="@color/midgreen"
-            android:title="@string/menu_home" />
+            android:title="Explore" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/infoicon"
