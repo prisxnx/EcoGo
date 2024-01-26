@@ -9,8 +9,8 @@
         android:title="Search" />
     <item
         android:id="@+id/bottom_com"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:icon="@drawable/baseline_diversity_1_24"
         android:title="Community" />
     <item
