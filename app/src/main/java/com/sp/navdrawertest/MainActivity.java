@@ -1,5 +1,6 @@
 package com.sp.navdrawertest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, Com_Add.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -79,12 +80,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item){
                 NavController navController = Navigation.findNavController(MainActivity.this,R.id.nav_host_fragment_content_main);
-                int id = item.getItemId();
-
-                if (id == R.id.bottom_search || id == R.id.bottom_profile || id == R.id.bottom_CF || id == R.id.bottom_qr || id == R.id.bottom_com) {
-                    navController.navigate(id);
-                }
-                    return true;
+                navController.navigate(item.getItemId());
+                return true;
             }
         });
 
@@ -107,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     } else if(id==R.id.nav_home){
                         navController.navigate(id);
+
                     } else if(id==R.id.nav_about){
                         navController.navigate(id);
                     }
@@ -117,14 +115,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment_content_main, fragment);
-        fragmentTransaction.commit();
     }
 
 

@@ -24,7 +24,6 @@ import java.util.Map;
 
 public class CarbonFootprintFragment extends Fragment {
 
-    private BottomNavigationView bottomNavigationView;
     private Spinner spinnerTransport, spinnerAccommodation, spinnerActivity;
     private EditText distance, noNights, noActivities;
     private TextView totalCarbonFootprintTextView;

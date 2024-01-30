@@ -10,14 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:gravity="center"
         android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" 🌍  Choose from the options below to gauge your environmental impact using our Carbon Footprint Calculator!"
-            android:textColor="#150101"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text=" 🌍  Choose from the options below to gauge your environmental impact using     our Carbon Footprint Calculator!"
+            android:textColor="#094E0D"
             android:textSize="20sp" />
 
         <Space
@@ -28,13 +37,15 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 🌿  Take a step towards sustainable living and make informed eco-friendly choices. "
-            android:textColor="#150101"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="🌿  Take a step towards sustainable living and make informed eco-friendly choices. "
+            android:textColor="#003A03"
             android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="20dp" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -44,6 +55,7 @@
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
                 android:text="  Transportation:  "
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <Spinner
@@ -61,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  Distance Travelled:  "
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -68,9 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="  Enter the distance travelled"
-                android:inputType="text"
-                android:textSize="16sp" />
+                android:hint=" Enter the distance travelled in km"
+                android:inputType="number|numberDecimal"
+                android:textColor="#000000"
+                android:textSize="14.5dp" />
 
         </TableRow>
 
@@ -86,6 +100,7 @@
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
                 android:text="  Accomadation:  "
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <Spinner
@@ -103,6 +118,7 @@
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
                 android:text="  Number of Nights:  "
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -110,9 +126,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="  Enter the number of nights"
-                android:inputType="text"
-                android:textSize="16dp" />
+                android:hint=" Enter the number of nights"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="14.5dp" />
         </TableRow>
 
         <Space
@@ -127,6 +144,7 @@
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
                 android:text="  Activity:  "
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <Spinner
@@ -143,7 +161,8 @@
             <TextView
                 android:layout_width="188dp"
                 android:layout_height="wrap_content"
-                android:text="  Time Taken:"
+                android:text="  Time Taken (hrs):"
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <EditText
@@ -151,9 +170,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="  Enter the number of activties"
-                android:inputType="text"
-                android:textSize="16sp" />
+                android:hint=" Enter the number of activties"
+                android:inputType="number|numberDecimal"
+                android:textColor="#000000"
+                android:textSize="14.5dp" />
         </TableRow>
 
         <Space
@@ -164,13 +184,14 @@
             android:id="@+id/button_calculate"
             android:layout_width="224dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:background="@drawable/boarder"
             android:backgroundTint="#06C28F"
             android:text="Calculate" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="18dp" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -180,12 +201,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  Total Carbon Footprint:  "
+                android:textColor="#000000"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/CF_total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000000"
                 android:textSize="20dp" />
 
         </TableRow>
