@@ -35,7 +35,7 @@ public class QRFragment extends Fragment {
 
     private void scanCode() {
         ScanOptions options = new ScanOptions();
-        options.setPrompt("Volume up to turn flash on");
+        options.setPrompt("Find an EcoGo QR Code to Scan!\nVolume Up/Down to turn flash On/Off");
         options.setBeepEnabled(true);
         options.setOrientationLocked(true);
         options.setCaptureActivity(CaptureAct.class);
@@ -46,9 +46,9 @@ public class QRFragment extends Fragment {
     {
         if(result.getContents()!=null){
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("Result");
+            builder.setTitle("Nice Scan!");
             builder.setMessage(result.getContents());
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("BACK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
