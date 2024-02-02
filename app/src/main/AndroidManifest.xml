@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -14,9 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NavDrawerTest"
         tools:targetApi="34">
-        <activity
-            android:name=".Com_Add"
-            android:exported="false" />
         <activity
             android:name=".SignUp"
             android:exported="false" />

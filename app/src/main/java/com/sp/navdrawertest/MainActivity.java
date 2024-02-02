@@ -1,5 +1,7 @@
 package com.sp.navdrawertest;
 
+import static java.security.AccessController.getContext;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.Firebase;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sp.navdrawertest.databinding.ActivityMainBinding;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private BottomNavigationView bottomNavigationView;
     private DatabaseReference databaseReference;
-
+    public String USERID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +62,26 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Intent intent = getIntent();
+        if (intent != null) {
+            USERID = intent.getStringExtra("userId");
+        }
+        Bundle userDataBundle=new Bundle();
+        userDataBundle.putString("userID",USERID);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Com_Add.class);
-                startActivity(intent);
+                Fragment postFragment = PostFragment.newInstance(USERID);
+                postFragment.setArguments(userDataBundle);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment_content_main, postFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         DrawerLayout drawer = binding.drawerLayout;

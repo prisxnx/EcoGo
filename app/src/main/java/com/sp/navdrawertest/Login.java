@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    public void checkUser(){
+    public void checkUser() {
         String userUsername = loginUsername.getText().toString().trim();
         String userPassword = loginPassword.getText().toString().trim();
 
@@ -85,20 +85,31 @@ public class Login extends AppCompatActivity {
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     loginUsername.setError(null);
-                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
 
-                    if (passwordFromDB.equals(userPassword)){
+                    // Retrieve user data from the Realtime Database
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        String passwordFromDB = userSnapshot.child("password").getValue(String.class);
+
+                        if (passwordFromDB.equals(userPassword)) {
                             loginUsername.setError(null);
+
+                            // Retrieve other user data as needed
+                            String userId = userSnapshot.getKey();
+                            String userEmail = userSnapshot.child("email").getValue(String.class);
+
+                            // Now you have user data, and you can use it as needed
+                            // For example, you can pass this data to the MainActivity
                             Intent intent = new Intent(Login.this, MainActivity.class);
+                            intent.putExtra("userId", userId);
                             startActivity(intent);
-                        }else{
+                        } else {
                             loginPassword.setError("Invalid Credentials");
                             loginPassword.requestFocus();
                         }
-                }else{
+                    }
+                } else {
                     loginUsername.setError("User does not exist");
                     loginUsername.requestFocus();
                 }
@@ -106,8 +117,9 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle onCancelled event
             }
         });
     }
+
 }
