@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/selectphoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/postimageview"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/baseline_add_photo_alternate_24" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <GridLayout
+            android:rowCount="1"
+            android:columnCount="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/currentlocbutton"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="start"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:background="@drawable/tallpillshape"
+                android:backgroundTint="@color/midgreen"
+                android:text="Get current location"
+                android:textSize="13dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/manuallocbutton"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="start"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:background="@drawable/tallpillshape"
+                android:backgroundTint="@color/midgreen"
+                android:text="Manually Find Location"
+                android:textSize="13dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+        </GridLayout>
+
+        <EditText
+            android:id="@+id/userentersitename"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter Site Name"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:paddingStart="20dp"
+            android:background="@drawable/pillshapebg"/>
+        <EditText
+            android:id="@+id/userenterstate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter State, Country"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:paddingStart="20dp"
+            android:background="@drawable/pillshapebg"/>
+
+        <EditText
+            android:id="@+id/userenterdov"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter Date of Visit DD/MM/YYYY"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:paddingStart="20dp"
+            android:background="@drawable/pillshapebg"/>
+        <EditText
+            android:id="@+id/userentercaption"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Write A Caption!"
+            android:layout_marginTop="10dp"
+            android:paddingStart="20dp"
+            android:background="@drawable/tallpillshape"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/uploadpostbutton"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:background="@drawable/pillshapebg"
+            android:backgroundTint="@color/midgreen"
+            android:text="Post"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+</RelativeLayout>
