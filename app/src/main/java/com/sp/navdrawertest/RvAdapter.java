@@ -3,18 +3,23 @@ package com.sp.navdrawertest;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.auth.User;
+import com.sp.navdrawertest.postInfo;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
-    private ArrayList<String> data;
+    private ArrayList<postInfo> postInfoList;
 
-    public RvAdapter(ArrayList<String> data) {
-        this.data = data;
+    public RvAdapter(ArrayList<postInfo> postInfoList) {
+        this.postInfoList = postInfoList;
     }
 
     @NonNull
@@ -26,25 +31,41 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        holder.rvTitle.setText(data.get(position));
+        holder.bind(postInfoList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return postInfoList.size();
     }
 
-    public void setData(ArrayList<String> newData) {
-        data = newData;
+    public void setPostInfoList(ArrayList<postInfo> newPostInfoList) {
+        postInfoList=newPostInfoList;
         notifyDataSetChanged();
     }
 
     static class MyHolder extends RecyclerView.ViewHolder {
-        TextView rvTitle;
+        TextView rvTitle, rvType;
+        ImageView rvCardImage;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             rvTitle = itemView.findViewById(R.id.rvTitle);
+            rvType = itemView.findViewById(R.id.rvType);
+            rvCardImage = itemView.findViewById(R.id.rvCardImage);
+        }
+
+        public void bind(postInfo post) {
+            // Check if the user is "ecogoadmin" before setting data
+            if ("ecogoadmin".equals(post.getCurrentUserID())) {
+                rvTitle.setText(post.getPostSiteName());
+                rvType.setText(post.getPostCaption());
+                Picasso.get().load(post.getPostImage()).into(rvCardImage);
+                itemView.setVisibility(View.VISIBLE);
+            } else {
+                // If the user is not "ecogoadmin", you might want to hide the view or handle it differently
+                itemView.setVisibility(View.GONE);
+            }
         }
     }
 }

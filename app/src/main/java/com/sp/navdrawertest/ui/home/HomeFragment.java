@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sp.navdrawertest.R;
 import com.sp.navdrawertest.RvAdapter;
 import com.sp.navdrawertest.databinding.FragmentHomeBinding;
+import com.sp.navdrawertest.postInfo;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,6 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         recyclerView = binding.horizontalRv;
-        // ... (other RecyclerView setup)
 
         return root;
     }
@@ -50,20 +50,11 @@ public class HomeFragment extends Fragment {
             updateRecyclerView(newData);
         });
 
-        // Load initial data (you can replace this with your own data source)
-        ArrayList<String> initialData = new ArrayList<>();
-        initialData.add("Initial Item1");
-        initialData.add("Initial Item2");
-        initialData.add("Initial Item3");
-        initialData.add("Initial Item4");
-        initialData.add("Initial Item5");
-        // ... (add more items as needed)
-
-        // Set the initial data to the ViewModel
-        viewModel.setDataSource(initialData);
+        // Fetch data from the Realtime Database
+        viewModel.fetchDataFromDatabase();
     }
 
-    private void updateRecyclerView(ArrayList<String> newData) {
+    private void updateRecyclerView(ArrayList<postInfo> newData) {
         // Update the RecyclerView adapter or dataset
         if (rvAdapter == null) {
             rvAdapter = new RvAdapter(newData);
@@ -71,7 +62,7 @@ public class HomeFragment extends Fragment {
             recyclerView.setAdapter(rvAdapter);
         } else {
             // If adapter already exists, update the data and notify the adapter
-            rvAdapter.setData(newData);
+            rvAdapter.setPostInfoList(newData);
         }
     }
 

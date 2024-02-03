@@ -39,6 +39,7 @@
             android:layout_height="33dp" />
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/username_CA"
             android:layout_width="314dp"
             android:layout_height="40dp"
@@ -53,6 +54,7 @@
             android:layout_height="33dp" />
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/Password_CA"
             android:layout_width="314dp"
             android:layout_height="40dp"
@@ -67,6 +69,7 @@
             android:layout_height="33dp" />
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/ConfirmPass_CA"
             android:layout_width="314dp"
             android:layout_height="40dp"

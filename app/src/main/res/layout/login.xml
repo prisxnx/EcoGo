@@ -44,6 +44,7 @@
 
         <EditText
             android:id="@+id/username_L"
+            android:singleLine="true"
             android:layout_width="346dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -64,6 +65,7 @@
 
         <EditText
             android:id="@+id/password_L"
+            android:singleLine="true"
             android:layout_width="346dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
