@@ -1,34 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfileFragment">
+    android:backgroundTint="@color/white"
+    android:layout_width="match_parent">
 
-    <TableRow
-        android:padding="8dp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <GridLayout
+        android:id="@+id/gridlayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="1">
 
         <ImageView
-            android:layout_column="1"
-            android:layout_width="135dp"
-            android:layout_height="135dp"
-            android:src="@drawable/baseline_account_circle_24" />
-    </TableRow>
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_account_circle_24"
+            android:layout_row="0"
+            android:layout_column="0"/>
 
-    <TableRow>
         <RelativeLayout
+            android:id="@+id/relativelayout"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/profileusername"
+            android:textSize="20dp"
+            android:paddingTop="25dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+            android:text="Username"/>
+        <TextView
+            android:textSize="15dp"
+            android:id="@+id/profilerank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileusername"
+            android:text="EcoGo Rank"/>
+            <GridLayout
+                android:layout_marginStart="2dp"
+                android:layout_below="@id/profilerank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="1"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false"
+                android:rowOrderPreserved="false"
+                android:useDefaultMargins="true">
 
-            <TextView
-             android:layout_column="2"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Username"/>
+                <ImageView
+                    android:clickable="true"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/facebookicon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:src="@drawable/facebookicon" />
+
+                <ImageView
+                    android:clickable="true"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/instagramicon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:src="@drawable/instagramicon" />
+
+            </GridLayout>
+
         </RelativeLayout>
-    </TableRow>
 
-</TableLayout>
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/gridlayout2"
+        android:layout_below="@id/gridlayout1"
+        android:layout_width="match_parent"
+        android:columnOrderPreserved="false"
+        android:rowOrderPreserved="false"
+        android:useDefaultMargins="true"
+        android:columnCount="2"
+        android:rowCount="1"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/editprofilebutton"
+            android:text="Edit Profile"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/midgrey"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_height="40dp"
+            android:layout_width="195dp"/>
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:text="Share Profile"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/midgrey"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:layout_height="40dp"
+            android:layout_width="195dp"/>
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/gridlayout3"
+        android:columnWidth="0dp"
+        android:stretchMode="spacingWidthUniform"
+        android:layout_below="@id/gridlayout2"
+        android:foregroundGravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="1"
+        android:useDefaultMargins="true">
+
+        <TextView
+            android:id="@+id/placestextview"
+            android:textSize="15dp"
+            android:textColor="@color/darkgrey"
+            android:clickable="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Places"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/journaltextview"
+            android:textSize="15dp"
+            android:textColor="@color/darkgrey"
+            android:clickable="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="My Journal"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/savedtextview"
+            android:textSize="15dp"
+            android:textColor="@color/darkgrey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Saved"
+            android:clickable="true"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:gravity="center"/>
+    </GridLayout>
+
+    <LinearLayout
+        android:paddingHorizontal="6dp"
+        android:layout_below="@id/gridlayout3"
+        android:id="@+id/ProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+</RelativeLayout>

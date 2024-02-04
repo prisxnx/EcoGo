@@ -53,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private BottomNavigationView bottomNavigationView;
+    private TextView HeaderUsername;
     private DatabaseReference databaseReference;
     public String USERID;
+    public String ECOGORANK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        HeaderUsername=binding.navView.getHeaderView(0).findViewById(R.id.headerusername);
+        HeaderUsername.setText(USERID);
 
         bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener(){
             @Override
