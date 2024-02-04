@@ -3,6 +3,9 @@ package com.sp.navdrawertest;
 public class postInfo {
     private String PostSiteName, PostCaption, PostDOV, PostState, LocationLongitude, LocationLatitude, PostDocID, PostImage,CurrentUserID;
 
+    public postInfo() {
+    }
+
     public postInfo(String postSiteName, String postCaption, String postDOV, String postState,
                     String locationLongitude, String locationLatitude, String postDocID, String postImage, String currentUserID) {
         PostSiteName = postSiteName;
