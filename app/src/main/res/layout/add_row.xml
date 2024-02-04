@@ -46,14 +46,14 @@
                 <TextView
                     android:id="@+id/add_name"
                     android:layout_width="158dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:text="TextView"
                     android:textColor="#039970" />
 
                 <TextView
                     android:id="@+id/add_SC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textColor="#039970" />
@@ -61,7 +61,7 @@
                 <TextView
                     android:id="@+id/add_dov"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textColor="#039970" />
@@ -91,6 +91,7 @@
 
                     <TextView
                         android:paddingLeft="6dp"
+                        android:textColor="@color/textgrey"
                         android:id="@+id/add_usersname"
                         android:textStyle="bold"
                         android:textSize="20dp"
@@ -103,6 +104,7 @@
             </TableRow>
 
             <TextView
+                android:textColor="@color/textgrey"
                 android:paddingLeft="6dp"
                 android:paddingRight="8dp"
                 android:paddingBottom="6dp"
