@@ -9,27 +9,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sp.navdrawertest.adminInfo;
 import com.sp.navdrawertest.postInfo;
 
 import java.util.ArrayList;
 
 public class HomeViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<postInfo>> dataSource = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<adminInfo>> adminPosts = new MutableLiveData<>();
 
-    public void fetchDataFromDatabase() {
-        DatabaseReference postInfoRef = FirebaseDatabase.getInstance().getReference("PostInfo");
-        postInfoRef.addValueEventListener(new ValueEventListener() {
+    public void fetchAdminPosts() {
+        DatabaseReference adminPostsRef = FirebaseDatabase.getInstance().getReference("AdminPost");
+        adminPostsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<postInfo> posts = new ArrayList<>();
+                ArrayList<adminInfo> adminPostsList = new ArrayList<>();
                 if (dataSnapshot != null) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        postInfo post = postSnapshot.getValue(postInfo.class);
+                        adminInfo post = postSnapshot.getValue(adminInfo.class);
                         if (post != null) {
-                            posts.add(post);
+                            adminPostsList.add(post);
                         }
                     }
-                    dataSource.postValue(posts);
+                    adminPosts.postValue(adminPostsList);
                 }
             }
 
@@ -40,7 +41,7 @@ public class HomeViewModel extends ViewModel {
         });
     }
 
-    public LiveData<ArrayList<postInfo>> getDataSource() {
-        return dataSource;
+    public LiveData<ArrayList<adminInfo>> getAdminPosts() {
+        return adminPosts;
     }
 }

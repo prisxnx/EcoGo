@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sp.navdrawertest.R;
 import com.sp.navdrawertest.RvAdapter;
+import com.sp.navdrawertest.adminInfo;
 import com.sp.navdrawertest.databinding.FragmentHomeBinding;
 import com.sp.navdrawertest.postInfo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -45,16 +47,18 @@ public class HomeFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         // Observe changes in the data source
-        viewModel.getDataSource().observe(getViewLifecycleOwner(), newData -> {
-            // Update RecyclerView with the new data
-            updateRecyclerView(newData);
+        viewModel.getAdminPosts().observe(getViewLifecycleOwner(), new Observer<ArrayList<adminInfo>>() {
+            @Override
+            public void onChanged(ArrayList<adminInfo> newAdminPosts) {
+                updateRecyclerView(newAdminPosts);
+            }
         });
 
         // Fetch data from the Realtime Database
-        viewModel.fetchDataFromDatabase();
+        viewModel.fetchAdminPosts();
     }
 
-    private void updateRecyclerView(ArrayList<postInfo> newData) {
+    private void updateRecyclerView(ArrayList<adminInfo> newData) {
         // Update the RecyclerView adapter or dataset
         if (rvAdapter == null) {
             rvAdapter = new RvAdapter(newData);
@@ -62,7 +66,7 @@ public class HomeFragment extends Fragment {
             recyclerView.setAdapter(rvAdapter);
         } else {
             // If adapter already exists, update the data and notify the adapter
-            rvAdapter.setPostInfoList(newData);
+            rvAdapter.setAdminInfoList(newData);
         }
     }
 

@@ -16,10 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
-    private ArrayList<postInfo> postInfoList;
+    private ArrayList<adminInfo> adminInfoList;
 
-    public RvAdapter(ArrayList<postInfo> postInfoList) {
-        this.postInfoList = postInfoList;
+    public RvAdapter(ArrayList<adminInfo> adminInfoList) {
+        this.adminInfoList = adminInfoList;
     }
 
     @NonNull
@@ -31,16 +31,17 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        holder.bind(postInfoList.get(position));
+        holder.bind(adminInfoList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return postInfoList.size();
+        return adminInfoList.size();
     }
 
-    public void setPostInfoList(ArrayList<postInfo> newPostInfoList) {
-        postInfoList=newPostInfoList;
+    public void setAdminInfoList(ArrayList<adminInfo> newAdminInfoList) {
+        adminInfoList.clear();
+        adminInfoList.addAll(newAdminInfoList);
         notifyDataSetChanged();
     }
 
@@ -55,17 +56,11 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
             rvCardImage = itemView.findViewById(R.id.rvCardImage);
         }
 
-        public void bind(postInfo post) {
-            // Check if the user is "ecogoadmin" before setting data
-            if ("ecogoadmin".equals(post.getCurrentUserID())) {
+        public void bind(adminInfo post) {
                 rvTitle.setText(post.getPostSiteName());
                 rvType.setText(post.getPostCaption());
                 Picasso.get().load(post.getPostImage()).into(rvCardImage);
                 itemView.setVisibility(View.VISIBLE);
-            } else {
-                // If the user is not "ecogoadmin", you might want to hide the view or handle it differently
-                itemView.setVisibility(View.GONE);
-            }
         }
     }
 }
