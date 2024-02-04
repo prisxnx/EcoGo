@@ -65,6 +65,7 @@ public class SignUp extends AppCompatActivity{
                 String username = signupUsername.getText().toString();
                 String password = signupPassword.getText().toString();
                 String confirm = signupConfirm.getText().toString();
+                String profilePic = PFP.toString();
 
                 if (!password.equals(confirm)) {
                     signupPassword.setError("Passwords do not match");
@@ -72,7 +73,7 @@ public class SignUp extends AppCompatActivity{
                     return; // Exit the method, preventing further execution
                 }
 
-                Helper user = new Helper(username, password, confirm);
+                Helper user = new Helper(profilePic,username, password, confirm);
                 reference.child(username).setValue(user);
 
                 Toast.makeText(SignUp.this,"You have signed up successfully!", Toast.LENGTH_SHORT).show();
@@ -148,6 +149,7 @@ public class SignUp extends AppCompatActivity{
                     if (data != null && data.getExtras() != null) {
                         // Handle the captured image from the camera
                         Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                        PFP.setImageBitmap(imageBitmap);
                         // Now you can use this Bitmap to display the image or upload it to Firebase, etc.
                         // Example: PFP.setImageBitmap(imageBitmap);
                     }

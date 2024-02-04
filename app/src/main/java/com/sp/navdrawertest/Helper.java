@@ -1,9 +1,10 @@
 package com.sp.navdrawertest;
 
 public class Helper {
-    String name, password, confirm;
+    String profile,name, password, confirm;
 
-    public Helper(String name, String password, String confirm) {
+    public Helper(String profile, String name, String password, String confirm) {
+        this.profile = profile;
         this.name = name;
         this.password = password;
         this.confirm = confirm;
@@ -14,6 +15,13 @@ public class Helper {
     }
 
     // Getters and setters...
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
     public String getName() {
         return name;
     }

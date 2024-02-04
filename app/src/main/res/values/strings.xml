@@ -41,4 +41,8 @@
         <item>Dining</item>
         <item>Others</item>
     </string-array>
+
+
+    <string name="title_activity_home_map">Home_Map</string>
+    <string name="title_activity_manual_map">ManualMap</string>
 </resources>

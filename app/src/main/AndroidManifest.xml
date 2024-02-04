@@ -4,7 +4,13 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +22,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NavDrawerTest"
         tools:targetApi="34">
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY" />
+
+        <activity
+            android:name=".ManualMap"
+            android:exported="false"
+            android:label="@string/title_activity_manual_map" />
+        <activity
+            android:name=".Home_Map"
+            android:exported="false"
+            android:label="@string/title_activity_home_map" />
         <activity
             android:name=".SignUp"
             android:exported="false" />
@@ -35,7 +65,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="EcoGo"
-            android:theme="@style/Theme.NavDrawerTest.NoActionBar"></activity>
+            android:theme="@style/Theme.NavDrawerTest.NoActionBar" />
         <activity
             android:name=".CaptureAct"
             android:screenOrientation="portrait"

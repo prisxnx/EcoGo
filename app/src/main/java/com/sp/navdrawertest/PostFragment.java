@@ -2,11 +2,19 @@ package com.sp.navdrawertest;
 
 import android.app.Activity;
 import android.Manifest;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -74,6 +82,12 @@ public class PostFragment  extends Fragment {
     private String CurrentUserId;
     private String DocId;
     private String currentUser;
+    private AppCompatButton currentLocButton, manualLocButton;
+    private LocationManager locationManager;
+    private double latitude, longitude;
+    private static final int MANUAL_MAP_REQUEST_CODE = 123;
+    private boolean manualLocationSelected = false;
+    private double manualLatitude, manualLongitude, currentLatitude, currentLongitude;
 
     public PostFragment(){
 
@@ -136,9 +150,96 @@ public class PostFragment  extends Fragment {
             }
         });
 
+        currentLocButton = view.findViewById(R.id.currentlocbutton);
+        manualLocButton = view.findViewById(R.id.manuallocbutton);
+
+        currentLocButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCurrentLocation();
+                manualLocationSelected = false;
+            }
+        });
+
+        manualLocButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //manualLocationSelected = true;
+                // Start ManualMap activity for manual location selection
+                Intent intent = new Intent(getContext(), ManualMap.class);
+                startActivityForResult(intent, MANUAL_MAP_REQUEST_CODE);
+            }
+        });
 
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MANUAL_MAP_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            // Retrieve the selected latitude and longitude from ManualMap activity
+            manualLatitude = data.getDoubleExtra("latitude", 0.0);
+            manualLongitude = data.getDoubleExtra("longitude", 0.0);
+
+            // Now you can use these values as needed (e.g., store in Firebase)
+            Toast.makeText(getContext(), "Selected Location: " + manualLatitude + ", " + manualLongitude, Toast.LENGTH_SHORT).show();
+            UploadSiteInfo();
+        }
+    }
+
+    private void getCurrentLocation() {
+        locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            // Register for location updates
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        } else {
+            // Request location permissions if not granted
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+    }
+
+    // Create a LocationListener to handle location updates
+    LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                // Get the latitude and longitude
+                currentLatitude = location.getLatitude();
+                currentLongitude = location.getLongitude();
+
+                // Optionally, you can stop receiving location updates if you only need a one-time location
+                locationManager.removeUpdates(this);
+
+                // Now, you can use latitude and longitude as needed
+                Toast.makeText(getContext(), "Current Location: " + currentLatitude + ", " + currentLongitude, Toast.LENGTH_SHORT).show();
+
+                // Call UploadSiteInfo with the latest location
+                UploadSiteInfo();
+            }
+        }
+
+        // Implement other LocationListener methods if needed
+        @Override
+        public void onProviderDisabled(String provider) {
+            // Handle provider disabled
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // Handle provider enabled
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            // Handle status changed
+        }
+    };
+
+
 
     private void CheckStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -212,13 +313,24 @@ public class PostFragment  extends Fragment {
         String postdov = UserEnterDate.getText().toString().trim();
         String poststate = UserEnterState.getText().toString().trim();
 
+        // Use the latest latitude and longitude based on the source (current or manual)
+        if (manualLocationSelected && manualLatitude != 0.0 && manualLongitude != 0.0) {
+            latitude = manualLatitude;
+            longitude = manualLongitude;
+
+
+        } else {
+            latitude = currentLatitude;
+            longitude = currentLongitude;
+        }
+
         if (TextUtils.isEmpty(postsitename) || TextUtils.isEmpty(postcaption) || TextUtils.isEmpty(postdov) || TextUtils.isEmpty(poststate)) {
             Toast.makeText(getContext(), "Please Fill ALL Fields", Toast.LENGTH_SHORT).show();
         } else {
             // Generate a unique key for the post in Realtime Database
             String postId = databaseReference.push().getKey();
 
-            postInfo postInfo = new postInfo(postsitename, postcaption, postdov, poststate, "", "", "", PhotoUrl, currentUser); // Use currentUser here
+            postInfo postInfo = new postInfo(postsitename, postcaption, postdov, poststate, String.valueOf(latitude), String.valueOf(longitude), "", PhotoUrl, currentUser); // Use currentUser here
 
             // Save the post using the generated key
             databaseReference.child(postId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
