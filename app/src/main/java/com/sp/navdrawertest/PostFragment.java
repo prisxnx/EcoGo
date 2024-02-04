@@ -183,9 +183,11 @@ public class PostFragment  extends Fragment {
             manualLatitude = data.getDoubleExtra("latitude", 0.0);
             manualLongitude = data.getDoubleExtra("longitude", 0.0);
 
+            // Update the flag to indicate that a manual location is selected
+            manualLocationSelected = true;
+
             // Now you can use these values as needed (e.g., store in Firebase)
             Toast.makeText(getContext(), "Selected Location: " + manualLatitude + ", " + manualLongitude, Toast.LENGTH_SHORT).show();
-            UploadSiteInfo();
         }
     }
 
@@ -194,12 +196,16 @@ public class PostFragment  extends Fragment {
 
         if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // Register for location updates
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            // Check if the manual location is not selected, then register for location updates
+            if (!manualLocationSelected) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            }
         } else {
             // Request location permissions if not granted
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }
+        // Update the flag to indicate that a manual location is not selected
+        manualLocationSelected = false;
     }
 
     // Create a LocationListener to handle location updates
@@ -216,9 +222,6 @@ public class PostFragment  extends Fragment {
 
                 // Now, you can use latitude and longitude as needed
                 Toast.makeText(getContext(), "Current Location: " + currentLatitude + ", " + currentLongitude, Toast.LENGTH_SHORT).show();
-
-                // Call UploadSiteInfo with the latest location
-                UploadSiteInfo();
             }
         }
 
@@ -313,41 +316,41 @@ public class PostFragment  extends Fragment {
         String postdov = UserEnterDate.getText().toString().trim();
         String poststate = UserEnterState.getText().toString().trim();
 
+
+        if (TextUtils.isEmpty(postsitename) || TextUtils.isEmpty(postcaption) || TextUtils.isEmpty(postdov) || TextUtils.isEmpty(poststate)) {
+            Toast.makeText(getContext(), "Please Fill ALL Fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Use the latest latitude and longitude based on the source (current or manual)
         if (manualLocationSelected && manualLatitude != 0.0 && manualLongitude != 0.0) {
             latitude = manualLatitude;
             longitude = manualLongitude;
-
 
         } else {
             latitude = currentLatitude;
             longitude = currentLongitude;
         }
 
-        if (TextUtils.isEmpty(postsitename) || TextUtils.isEmpty(postcaption) || TextUtils.isEmpty(postdov) || TextUtils.isEmpty(poststate)) {
-            Toast.makeText(getContext(), "Please Fill ALL Fields", Toast.LENGTH_SHORT).show();
-        } else {
-            // Generate a unique key for the post in Realtime Database
-            String postId = databaseReference.push().getKey();
+        // Generate a unique key for the post in Realtime Database
+        String postId = databaseReference.push().getKey();
+        postInfo postInfo = new postInfo(postsitename, postcaption, postdov, poststate, String.valueOf(latitude), String.valueOf(longitude), "", PhotoUrl, currentUser); // Use currentUser here
 
-            postInfo postInfo = new postInfo(postsitename, postcaption, postdov, poststate, String.valueOf(latitude), String.valueOf(longitude), "", PhotoUrl, currentUser); // Use currentUser here
-
-            // Save the post using the generated key
-            databaseReference.child(postId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                        replaceFragment(new CommunityFragment());
-                    }
+        // Save the post using the generated key
+        databaseReference.child(postId).setValue(postInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new CommunityFragment());
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void replaceFragment(CommunityFragment communityFragment) {
