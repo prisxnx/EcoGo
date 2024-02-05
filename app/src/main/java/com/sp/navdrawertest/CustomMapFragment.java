@@ -42,7 +42,7 @@ public class CustomMapFragment extends SupportMapFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (callback != null) {
-            getMapAsync(callback); // Use the stored callback directly
+            getMapAsync(callback);
         } else {
             getMapAsync(new OnMapReadyCallback() {
                 @Override
@@ -66,7 +66,7 @@ public class CustomMapFragment extends SupportMapFragment {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             MarkerData markerData = snapshot.getValue(MarkerData.class);
                             LatLng markerPosition = new LatLng(markerData.getLatitude(), markerData.getLongitude());
-                            googleMap.addMarker(new MarkerOptions().position(markerPosition).title("Saved location"));
+                            googleMap.addMarker(new MarkerOptions().position(markerPosition).title(markerData.getTitle()));
                         }
                     }
                     @Override

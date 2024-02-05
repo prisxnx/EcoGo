@@ -67,13 +67,9 @@ public class MainActivity extends AppCompatActivity {
         if (intent != null) {
             USERID = intent.getStringExtra("userId");
             userDataBundle.putString("userID",USERID);
-            ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
-            if (profileFragment != null) {
-                profileFragment.setArguments(userDataBundle);
-            }
+            Log.d("MainActivity OnCreate", "USERID" + USERID);
+            Log.d("MainActivity OnCreate", "userDataBundle" + userDataBundle);
         }
-
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -89,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
             }
         });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -109,8 +106,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item){
                 NavController navController = Navigation.findNavController(MainActivity.this,R.id.nav_host_fragment_content_main);
-                navController.navigate(item.getItemId());
-
+                int itemId=item.getItemId();
+                if(itemId==R.id.bottom_profile){
+                    Fragment profileFragment = ProfileFragment.newInstance(USERID);
+                    profileFragment.setArguments(userDataBundle);
+                    Log.d("MainActivity BottomNav onNavItemSelect", "userDataBundle" + userDataBundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, profileFragment).commit();
+                }
+                navController.navigate(itemId);
                 return true;
             }
         });

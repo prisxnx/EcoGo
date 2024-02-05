@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:backgroundTint="@color/white"
+    android:background="@color/white"
     android:layout_width="match_parent">
 
     <GridLayout
@@ -31,6 +32,8 @@
         <TextView
             android:id="@+id/profileusername"
             android:textSize="20dp"
+            android:visibility="visible"
+            android:textColor="@color/darkgrey"
             android:paddingTop="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

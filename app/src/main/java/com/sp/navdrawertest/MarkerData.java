@@ -3,14 +3,24 @@ public class MarkerData {
     private String userId;
     private double latitude;
     private double longitude;
+    private String title;
 
     public MarkerData() {
     }
 
-    public MarkerData(String userId, double latitude, double longitude) {
+    public MarkerData(String userId, double latitude, double longitude, String title) {
         this.userId = userId;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUserId() {
