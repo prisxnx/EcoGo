@@ -2,8 +2,10 @@ package com.sp.navdrawertest;
 
 public class adminInfo {
     private String LocationLongitude,LocationLatitude,PostCaption,PostImage,PostSiteName,PostState;
+    private int type;
 
     public adminInfo() {
+
     }
 
     public adminInfo(String postSiteName, String postCaption, String postState,
@@ -14,6 +16,14 @@ public class adminInfo {
         LocationLongitude = locationLongitude;
         LocationLatitude = locationLatitude;
         PostImage = postImage;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType() {
+        this.type=type;
     }
 
     public String getPostSiteName() {

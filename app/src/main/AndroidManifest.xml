@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -72,5 +73,10 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
     </application>
+
+    <queries>
+        <package android:name="com.facebook.android"/>
+        <package android:name="com.linkedin.android"/>
+    </queries>
 
 </manifest>

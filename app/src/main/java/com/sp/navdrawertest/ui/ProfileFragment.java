@@ -1,5 +1,6 @@
 package com.sp.navdrawertest.ui;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sp.navdrawertest.CustomMapFragment;
 import android.Manifest;
+import android.widget.Toast;
 
 import com.sp.navdrawertest.MarkerData;
 import com.sp.navdrawertest.R;
@@ -41,7 +44,8 @@ public class ProfileFragment extends Fragment {
 
     private TextView placesTextView, journalTextView, savedTextView,profileusername;
     private CardView mapcardview;
-    public String currentUser;
+    public String currentUser,OpenText;
+    private ImageView facebookbutton, linkedinbutton;
 
     public ProfileFragment(){
     }
@@ -61,6 +65,7 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             currentUser = getArguments().getString("userID");
             Log.d("ProfileFragment", "currentUser: " + currentUser);
+            OpenText="Find me on EcoGo! Username:" + currentUser;
         }
     }
 
@@ -71,13 +76,31 @@ public class ProfileFragment extends Fragment {
         journalTextView = view.findViewById(R.id.journaltextview);
         savedTextView = view.findViewById(R.id.savedtextview);
         profileusername = view.findViewById(R.id.profileusername);
+        facebookbutton=view.findViewById(R.id.facebookicon);
+        linkedinbutton=view.findViewById(R.id.linkedinicon);
 
         if (getArguments() != null) {
             currentUser = getArguments().getString("userID");
             Log.d("ProfileFragment", "onCreateView - currentUser: " + currentUser);
+            OpenText="Find me on EcoGo! Username:" + currentUser;
         }
 
+        OpenText="Find me on EcoGo! Username:" + currentUser;
         profileusername.setText(currentUser);
+
+        facebookbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sharingToSocialMedia("com.facebook.katana",OpenText);
+            }
+        });
+
+        linkedinbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sharingToSocialMedia("com.linkedin.katana",OpenText);
+            }
+        });
 
         placesTextView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -299,5 +322,31 @@ public class ProfileFragment extends Fragment {
                 // Permission is denied, handle the situation here (e.g., show a message to the user)
             }
         }
+    }
+
+    private void sharingToSocialMedia(String application, String linkopen){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT,linkopen);
+        boolean installed = checkappInstall(application);
+
+        if(installed){
+            intent.setPackage(application);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Install Application First", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean checkappInstall(String uri) {
+        PackageManager pm = getActivity().getPackageManager();
+        try{
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e){
+
+        }
+        return false;
     }
 }

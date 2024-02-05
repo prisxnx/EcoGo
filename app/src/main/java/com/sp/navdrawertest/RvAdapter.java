@@ -72,6 +72,10 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
     public interface OnItemClickListener {
         void onMapReady(GoogleMap googleMap);
 
+        void onCardClick(int position);
+
+        void onCardClick(adminInfo adminInfo);
+
         void onRouteDraw(List<List<LatLng>> route);
 
         void onItemClick(adminInfo adminInfo);

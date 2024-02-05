@@ -39,7 +39,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.Firebase;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 import com.sp.navdrawertest.databinding.ActivityMainBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private TextView HeaderUsername;
     private DatabaseReference databaseReference;
-    public String USERID;
+    public String USERID,USERdata;
     public Bundle userDataBundle=new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MainActivity OnCreate", "USERID" + USERID);
             Log.d("MainActivity OnCreate", "userDataBundle" + userDataBundle);
         }
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
         setSupportActionBar(binding.appBarMain.toolbar);
@@ -204,7 +209,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // User clicked "Delete," proceed with account deletion
-                        performAccountDeletion();
+                        findUserID(new AccountDeletionCallback() {
+                            @Override
+                            public void onAccountDeletion() {
+                                performAccountDeletion();
+                            }
+                        });
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -216,37 +226,49 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void performAccountDeletion() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            String userId = user.getUid();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-            databaseReference.child(userId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        // 2. Delete user's Firebase authentication account:
-                        FirebaseFirestore.getInstance().collection("users").document(userId).delete()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    // Account deleted successfully
-                                    Toast.makeText(MainActivity.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
-                                    finish(); // Close the app or redirect to login screen
-                                } else {
-                                    // Handle Firebase Auth deletion failure
-                                    Toast.makeText(MainActivity.this, "Failed to delete account", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    } else {
-                        // Handle Realtime Database deletion failure
-                        Toast.makeText(MainActivity.this, "Failed to delete account data", Toast.LENGTH_SHORT).show();
+    private void findUserID(final AccountDeletionCallback callback) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                    String childUserId = childSnapshot.getKey();
+                    if (childUserId.equals(USERID)) {
+                        USERdata = childUserId;
+                        // Perform account deletion here
+                        callback.onAccountDeletion();
                     }
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // This method will be called if there's an error while reading the data
+                Log.e("Firebase", "Error reading data", error.toException());
+            }
+        });
+    }
+
+    private interface AccountDeletionCallback {
+        void onAccountDeletion();
+    }
+
+    private void performAccountDeletion() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(USERdata);
+        userRef.removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // Account deletion successful
+                            Toast.makeText(MainActivity.this, "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                            FirebaseAuth.getInstance().signOut();
+                            finish();
+                        } else {
+                            // Account deletion failed
+                            Toast.makeText(MainActivity.this, "Failed to delete account", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

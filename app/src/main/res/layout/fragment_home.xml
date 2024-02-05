@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/homefrag_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,6 +31,7 @@
             android:rowCount="1">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/TransportCard"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_row="0"
@@ -38,6 +40,7 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_margin="8dp"
+                android:clickable="true"
                 app:cardBackgroundColor="@color/lightgrey"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp">
@@ -52,7 +55,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/exploreicon" />
+                        android:src="@drawable/train" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -64,6 +67,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/AccomCard"
+                android:clickable="true"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_row="0"
@@ -98,6 +103,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/ActivityCard"
+                android:clickable="true"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
@@ -176,7 +183,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
 </ScrollView>
 
 

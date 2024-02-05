@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,6 +54,12 @@ public class HomeFragment extends Fragment implements RvAdapter.OnItemClickListe
     private HomeViewModel viewModel;
     private MapView mapView;
     private GoogleMap map;
+    private Location currentLocation;
+    private LocationManager locationManager;
+    private double latitude, longitude;
+    private static final int MANUAL_MAP_REQUEST_CODE = 123;
+    private boolean manualLocationSelected = false;
+    private double manualLatitude, manualLongitude, currentLatitude, currentLongitude;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -61,6 +68,16 @@ public class HomeFragment extends Fragment implements RvAdapter.OnItemClickListe
         map.getUiSettings().setZoomGesturesEnabled(true);
         map.getUiSettings().setScrollGesturesEnabled(true);
         // ...
+    }
+
+    @Override
+    public void onCardClick(int position) {
+
+    }
+
+    @Override
+    public void onCardClick(adminInfo adminInfo) {
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -130,44 +147,83 @@ public class HomeFragment extends Fragment implements RvAdapter.OnItemClickListe
 
     @Override
     public void onItemClick(adminInfo adminInfo) {
-        View mapViewLayout = LayoutInflater.from(requireContext()).inflate(R.layout.homemapview, (ViewGroup) getView(), false);
-        ViewGroup rootView = (ViewGroup) getView();
-        if (rootView != null) {
-            rootView.removeAllViews();
-            rootView.addView(mapViewLayout);
-        }
-        mapView = mapViewLayout.findViewById(R.id.homemapview);
-        mapView.onCreate(null);
-        mapView.getMapAsync(this::onMapReady);
-
-        Location currentLocation = getCurrentLocation();
-        double latitude = Double.parseDouble(String.valueOf(currentLocation.getLatitude()));
-        double longitude = Double.parseDouble(String.valueOf(currentLocation.getLongitude()));
-        LatLng userCurrentLocation = new LatLng(latitude, longitude);
+        getCurrentLocation();
+        LatLng userCurrentLocation = new LatLng(currentLatitude, currentLongitude);
 
         latitude = Double.parseDouble(adminInfo.getLocationLatitude());
         longitude = Double.parseDouble(adminInfo.getLocationLongitude());
         LatLng clickedItemLocation = new LatLng(latitude, longitude);
         String url = getDirectionsUrl(userCurrentLocation, clickedItemLocation);
         new DrawRouteTask(requireContext()).execute(url);
+
+        View mapViewLayout = LayoutInflater.from(requireContext()).inflate(R.layout.homemapview, (ViewGroup) getView(), false);
+        ViewGroup rootView = (ViewGroup) getView();
+        if (rootView != null) {
+            rootView.removeAllViews();
+            rootView.addView(mapViewLayout);
+        }
+
+        mapView = mapViewLayout.findViewById(R.id.homemap);
+        mapView.onCreate(null);
+        mapView.getMapAsync(this::onMapReady);
     }
 
     private Location getCurrentLocation() {
-        // Get the user's current location using the appropriate method (e.g., using the Fused Location Provider API)
-        // You can use the Fused Location Provider API to get the user's current location
-        // For example, you can use the following code snippet to get the user's current location:
+        LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
-        Location currentLocation = null;
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationManager locationManager = (LocationManager) requireContext().getSystemService(Context.LOCATION_SERVICE);
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (lastKnownLocation != null) {
-                currentLocation = lastKnownLocation;
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            // Check if the locationManager is not null to avoid potential issues
+            if (locationManager != null) {
+                // Request location updates
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+
+                // Get the last known location as an initial value
+                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                if (lastKnownLocation != null) {
+                    // If lastKnownLocation is not null, return it
+                    return lastKnownLocation;
+                } else {
+                    // If lastKnownLocation is null, continue listening for updates in locationListener
+                    // Note: You may want to add a timeout mechanism here to handle cases where location updates are not received in a reasonable time.
+                }
+            }
+        } else {
+            // Request location permissions if not granted
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+        return null;
+    }
+
+    // Create a LocationListener to handle location updates
+    LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                // Get the latitude and longitude
+                currentLatitude = location.getLatitude();
+                currentLongitude = location.getLongitude();
             }
         }
 
-        return currentLocation;
-    }
+        // Implement other LocationListener methods if needed
+        @Override
+        public void onProviderDisabled(String provider) {
+            // Handle provider disabled
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // Handle provider enabled
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            // Handle status changed
+        }
+    };
 
     private String getDirectionsUrl(LatLng origin, LatLng destination) {
         // Create a Google Maps Directions API request URL
