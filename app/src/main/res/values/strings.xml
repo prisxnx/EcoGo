@@ -45,4 +45,5 @@
 
     <string name="title_activity_home_map">Home_Map</string>
     <string name="title_activity_manual_map">ManualMap</string>
+    <string name="google_maps_api_key">AIzaSyDrIIT7-XeEv77trg9CLJG9o4qzU_c4JrU</string>
 </resources>

@@ -44,6 +44,7 @@ import com.sp.navdrawertest.databinding.ActivityMainBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
+import com.sp.navdrawertest.ui.ProfileFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,20 +57,22 @@ public class MainActivity extends AppCompatActivity {
     private TextView HeaderUsername;
     private DatabaseReference databaseReference;
     public String USERID;
-    public String ECOGORANK;
-
+    public Bundle userDataBundle=new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Intent intent = getIntent();
         if (intent != null) {
             USERID = intent.getStringExtra("userId");
+            userDataBundle.putString("userID",USERID);
+            ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+            if (profileFragment != null) {
+                profileFragment.setArguments(userDataBundle);
+            }
         }
-        Bundle userDataBundle=new Bundle();
-        userDataBundle.putString("userID",USERID);
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -107,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item){
                 NavController navController = Navigation.findNavController(MainActivity.this,R.id.nav_host_fragment_content_main);
                 navController.navigate(item.getItemId());
+
                 return true;
             }
         });

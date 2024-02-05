@@ -20,21 +20,52 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sp.navdrawertest.CustomMapFragment;
 import android.Manifest;
+
+import com.sp.navdrawertest.MarkerData;
 import com.sp.navdrawertest.R;
 
 
 public class ProfileFragment extends Fragment {
 
-    private TextView placesTextView, journalTextView, savedTextView;
+    private TextView placesTextView, journalTextView, savedTextView,profileusername;
     private CardView mapcardview;
+    private String currentUser;
+
+    public ProfileFragment(){
+    }
+
+    public static ProfileFragment newInstance(String userId) {
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("userId", userId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Retrieve arguments and set currentUser
+        if (getArguments() != null) {
+            currentUser = getArguments().getString("userID");
+        }
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
         placesTextView = view.findViewById(R.id.placestextview);
         journalTextView = view.findViewById(R.id.journaltextview);
         savedTextView = view.findViewById(R.id.savedtextview);
+        profileusername = view.findViewById(R.id.profileusername);
+
+        if (getArguments() != null) {
+            profileusername.setText(currentUser);
+        }
 
         placesTextView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -91,6 +122,9 @@ public class ProfileFragment extends Fragment {
                             public void onMapLongClick(LatLng latLng) {
                                 // Add a marker at the long-pressed location
                                 googleMap.addMarker(new MarkerOptions().position(latLng).title("New location"));
+                                String userId = "user1"; // Replace with the actual user ID
+                                MarkerData markerData = new MarkerData(userId, latLng.latitude, latLng.longitude);
+                                FirebaseDatabase.getInstance().getReference("markerData").push().setValue(markerData);
                             }
                         });
                     }
