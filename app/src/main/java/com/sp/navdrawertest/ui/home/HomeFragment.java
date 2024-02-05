@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
 import com.sp.navdrawertest.R;
@@ -52,8 +53,8 @@ public class HomeFragment extends Fragment implements RvAdapter.OnItemClickListe
     private RecyclerView recyclerView;
     private RvAdapter rvAdapter;
     private HomeViewModel viewModel;
-    private MapView mapView;
-    private GoogleMap map;
+    private MapView mapView, mapView2;
+    private GoogleMap map,map2;
     private Location currentLocation;
     private LocationManager locationManager;
     private double latitude, longitude;
@@ -117,7 +118,49 @@ public class HomeFragment extends Fragment implements RvAdapter.OnItemClickListe
             // If adapter already exists, update the data and notify the adapter
             rvAdapter.setAdminInfoList(new ArrayList<>());
         }
+
+        mapView2 = view.findViewById(R.id.aroundmapView);
+        mapView2.onCreate(savedInstanceState);
+        mapView2.getMapAsync(googleMap -> {
+            map2 = googleMap;
+            // Enable features such as zoom, scroll, etc.
+            map2.getUiSettings().setZoomGesturesEnabled(true);
+            map2.getUiSettings().setScrollGesturesEnabled(true);
+
+            // Add markers to the map based on Firebase data
+            addMarkersFromFirebase();
+        });
+
     }
+
+    private void addMarkersFromFirebase() {
+        viewModel.getAdminPosts().observe(getViewLifecycleOwner(), adminPosts -> {
+            if (adminPosts != null) {
+                // Loop through the adminPosts and add markers to the map
+                for (adminInfo post : adminPosts) {
+                    try {
+                        String latitudeString = post.getLocationLatitude();
+                        String longitudeString = post.getLocationLongitude();
+
+                        if (latitudeString != null && longitudeString != null) {
+                            double latitude = Double.parseDouble(latitudeString);
+                            double longitude = Double.parseDouble(longitudeString);
+                            LatLng location = new LatLng(latitude, longitude);
+                            map2.addMarker(new MarkerOptions().position(location).title(post.getPostSiteName()));
+                        } else {
+                            // Handle the case where latitude or longitude is null
+                            // Log an error, skip this marker, or handle it based on your needs
+                        }
+                    } catch (NumberFormatException e) {
+                        // Handle the case where latitude or longitude is not a valid double
+                        // Log an error, skip this marker, or handle it based on your needs
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
 
     private void updateRecyclerView(ArrayList<adminInfo> newData) {
         // Update the RecyclerView adapter or dataset

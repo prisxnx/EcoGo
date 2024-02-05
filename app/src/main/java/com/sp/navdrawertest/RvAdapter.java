@@ -84,13 +84,14 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
     static class MyHolder extends RecyclerView.ViewHolder {
 
         CardView rvCard;
-        TextView rvTitle, rvType;
+        TextView rvTitle, rvType, rvSC;
         ImageView rvCardImage;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             rvTitle = itemView.findViewById(R.id.rvTitle);
             rvType = itemView.findViewById(R.id.rvType);
+            rvSC = itemView.findViewById(R.id.rvSC);
             rvCardImage = itemView.findViewById(R.id.rvCardImage);
             rvCard = itemView.findViewById(R.id.rvCard);
         }
@@ -98,6 +99,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.MyHolder> {
         public void bind(adminInfo post) {
             rvTitle.setText(post.getPostSiteName());
             rvType.setText(post.getPostCaption());
+            rvSC.setText(post.getPostState());
             Picasso.get().load(post.getPostImage()).into(rvCardImage);
             itemView.setVisibility(View.VISIBLE);
         }

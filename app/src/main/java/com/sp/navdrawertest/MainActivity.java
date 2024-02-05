@@ -136,10 +136,11 @@ public class MainActivity extends AppCompatActivity {
                     drawer.closeDrawer(GravityCompat.START);
                     if (id == R.id.draw_deleteacc) {
                         deleteAccount();
-                    } else if (id == R.id.draw_exitapp) {
-                        Toast.makeText(MainActivity.this, "exit app", Toast.LENGTH_SHORT).show();
-                    } else if (id == R.id.draw_logout) {
+                    } else if(id==R.id.draw_logout){
                         finish();
+                    }
+                    else if (id == R.id.draw_exitapp) {
+                        finishAffinity();
                     } else if(id==R.id.nav_home){
                         navController.navigate(id);
 

@@ -42,31 +42,31 @@
             android:layout_marginLeft="6dp"
             android:layout_below="@id/rvCardCard"
             android:textColor="@color/darkgrey"
-            android:textSize="15dp"/>
+            android:textSize="14dp"/>
 
         <TextView
             android:layout_below="@id/rvTitle"
             android:id="@+id/rvType"
             android:textAppearance="@color/darkgreen"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_marginBottom="2dp"
             android:text="Type of Place"
             android:textColor="@color/darkgreen"
-            android:textSize="10dp" />
+            android:textSize="9dp" />
 
         <TextView
-            android:visibility="invisible"
-            android:layout_below="@id/rvType"
-            android:id="@+id/rvDistance"
+            android:id="@+id/rvSC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_below="@id/rvType"
+            android:layout_marginLeft="7dp"
             android:layout_marginBottom="2dp"
-            android:text="xx km"
+            android:text="State,Country"
             android:textColor="@color/darkgreen"
-            android:textSize="10dp" />
+            android:textSize="9dp" />
 
 
     </RelativeLayout>
